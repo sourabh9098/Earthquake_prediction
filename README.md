@@ -2,68 +2,57 @@
 
 ## 📌 Project Overview
 
+I built this project because earthquake prediction is one of those problems where machine learning can actually matter — not just academically, but in terms of real impact. Nepal sits on one of the most seismically active zones in the world. The 2015 Gorkha earthquake alone killed nearly 9,000 people. I wanted to understand what patterns exist in historical seismic data and whether a model could learn to estimate magnitude from measurable parameters.
+So I took earthquake data from 1990 to 2026, cleaned it properly, engineered features from it, tested multiple models, and ended up with a tuned XGBoost regressor as the final model — deployed as a live Streamlit app.
+
+Live App 🔗 https://earthquakeprediction-by-sourabh.streamlit.app/
+
+
+What the Model Predicts :- 
+
+Given seismic station readings and geographic inputs, the model predicts the Richter scale magnitude of an earthquake. It's a regression task — not classification. The output is a continuous magnitude value which the app then maps to a severity label (Minor / Light / Moderate / Strong / Major).
+
 This project focuses on predicting earthquake magnitude using machine learning techniques and seismic/geographical data.
 
-The workflow includes:
+## The Journey — What Actually Happened
 
-- Data Cleaning
-- Exploratory Data Analysis (EDA)
-- Feature Engineering
-- Outlier Handling
-- Feature Selection
-- Hyperparameter Tuning
-- Model Evaluation
-- Explainable AI (Feature Importance & SHAP)
+Data Cleaning First
+The raw dataset had a lot of issues:
 
-The final model was built using ensemble learning algorithms such as Random Forest and XGBoost.
-
----
-
-LIVE LINK - https://earthquakeprediction-by-sourabh.streamlit.app/
-
-
-# 🚀 Problem Statement
-
-Earthquakes are one of the most dangerous natural disasters. Predicting earthquake magnitude can help improve:
-
-- Disaster preparedness
-- Risk management
-- Seismic analysis
-- Emergency response systems
-
-This project aims to build a regression model capable of predicting earthquake magnitude using historical earthquake data.
+id, type, status, updated, magError, magNst — dropped (no predictive value or potential leakage)
+time column — converted to datetime and extracted year, month, day, hour
+place column — parsed to extract country name from the end of messy text strings
+dmin — dropped due to too many missing values
+Missing values in nst, depthError filled with median (skewed features)
+Missing values in gap, rms, horizontalError filled with mean
+country values cleaned — fixed 2025 Southern Tibetan Plateau Earthquake → Southern Tibetan Plateau, unified inconsistent spellings
+Added depth_category feature: Shallow (0–70km) / Intermediate (70–300km) / Deep (300–700km)
 
 ---
 
 # 📂 Dataset Information
 
 The dataset contains seismic and geographical earthquake information.
+Sources Kaggle - https://www.kaggle.com/datasets/amansinghnp/nepal-earthquake-seismicity-dataset-1990-2026
+
 
 ## 🔹 Numerical Features
 
-- latitude
-- longitude
-- depth
-- nst
-- gap
-- rms
-- horizontalError
-- depthError
+- latitude          - longitude
+- depth             - nst
+- gap               - rms
+- horizontalError   - depthError
 
 ## 🔹 Categorical Features
 
-- magType
-- locationSource
-- magSource
-- country
+- magType     - locationSource
+- magSource   - country
 - depth_category
 
 ## 🔹 Time-Based Features
 
-- year
-- month
-- day
-- hour
+- year  - month
+- day   - hour
 
 ## 🎯 Target Variable
 
@@ -73,7 +62,7 @@ The dataset contains seismic and geographical earthquake information.
 
 # 📊 Exploratory Data Analysis (EDA)
 
-EDA techniques used:
+EDA techniques used:-
 
 - Missing value analysis
 - Duplicate row checking
@@ -91,25 +80,17 @@ The following preprocessing techniques were applied:
 
 ## ✅ Feature Engineering
 
-### Country Extraction
-
 Country names were extracted from the place feature.
 
 ### Time Feature Extraction
 
-Extracted:
-
-- year
-- month
-- day
-- hour
-
+- year   - month
+- day    - hour
 from timestamp columns.
 
 ### Depth Categorization
 
-Earthquake depth categorized into:
-
+Earthquake depth categorized into:-
 - Shallow
 - Intermediate
 - Deep
@@ -140,7 +121,6 @@ The following models were explored:
 - Linear Regression
 - Decision Tree Regressor
 - Random Forest Regressor
-- Gradient Boosting Regressor
 - XGBoost Regressor
 
 ---
@@ -148,8 +128,6 @@ The following models were explored:
 # 🔥 Final Model
 
 ## ✅ XGBoost Regressor
-
-The final selected model was XGBoost Regressor due to:
 
 - Better generalization
 - Strong nonlinear learning capability
@@ -186,8 +164,6 @@ Hyperparameter tuning was performed using:
 
 # 📈 Model Evaluation Metrics
 
-The following regression metrics were used:
-
 - R² Score
 - MAE (Mean Absolute Error)
 - RMSE (Root Mean Squared Error)
@@ -210,25 +186,12 @@ The following regression metrics were used:
 
 Important features identified:
 
-- nst
-- gap
-- depth
-- latitude
-- longitude
-- country
+- nst         - gap
+- depth       - latitude
+- longitude   - country
 - year
 
 Feature importance analysis helped identify meaningful seismic patterns influencing earthquake magnitude.
-
----
-
-# 🔍 Explainable AI (SHAP)
-
-SHAP analysis was performed to:
-
-- Explain model predictions
-- Identify feature contributions
-- Improve interpretability
 
 ---
 
@@ -240,8 +203,28 @@ The project includes:
 - Residual Plot
 - Actual vs Predicted Plot
 - Feature Importance Graph
-- SHAP Summary Plot
-- Distributio
+- Distribution
+
+Tech Stack
+
+Python 3
+Pandas, NumPy — data cleaning, feature engineering
+Matplotlib, Seaborn — EDA visualizations
+Scikit-learn — multiple models, train-test split, RandomizedSearchCV
+XGBoost — final model
+Pickle — model serialization
+Streamlit — live web app
+
+
+What I Learned
+The most interesting part of this project was feature leakage. magType and magSource columns seem like useful features — they describe how the magnitude was measured. But they're assigned after the earthquake is recorded, not before. Including them would give the model information it couldn't possibly have at prediction time. Dropping them was the right call, even though it reduced performance slightly.
+The second lesson was that depth matters more than I expected. Shallow earthquakes (under 70km) behave very differently from deep ones. Creating depth_category as an explicit feature helped the model learn this boundary more cleanly than raw depth alone.
+
+Author
+Sourabh Vishwakarma
+LinkedIn - www.linkedin.com/in/sourabh9098
+GitHub - https://github.com/sourabh9098/
+
 
 
 
