@@ -1,6 +1,6 @@
 # 🌍 Nepal Earthquake Magnitude Predictor
 
-![Dashboard](Live Screenshot.png)
+![Dashboard](Screenshot.png)
 
 [![Live Demo](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://earthquakeprediction-by-sourabh.streamlit.app/)
 
