@@ -68,7 +68,7 @@ Started with a baseline and worked up:
 | Random Forest | Better generalization |
 | XGBoost (base) | Best base model |
 
-#  Final Model -> ##  XGBoost Regressor
+#  Final Model ->  XGBoost Regressor
 
 - Better generalization
 - Strong nonlinear learning capability
@@ -79,19 +79,7 @@ Started with a baseline and worked up:
 
 Used `RandomizedSearchCV` with 5-fold CV on XGBoost across a large grid:
 
-```python
-xgb_grid = {
-    'n_estimators'    : [100, 200, 500],
-    'learning_rate'   : [0.01, 0.05, 0.1],
-    'max_depth'       : [3, 4, 5, 6, 7],
-    'min_child_weight': [1, 3, 5],
-    'subsample'       : [0.7, 0.8, 1.0],
-    'colsample_bytree': [0.7, 0.8, 1.0],
-    'gamma'           : [0, 0.1, 0.3],
-}
-```
-
-Best params: `colsample_bytree=0.7, gamma=0.1, learning_rate=0.1, max_depth=5, n_estimators=500`
+Best params: `learning_rate=0.1, max_depth=5, n_estimators=500`
 
 Also ran cross-validation on the final model to verify generalization.
 
