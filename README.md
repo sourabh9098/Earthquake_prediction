@@ -19,6 +19,9 @@ The final model was built using ensemble learning algorithms such as Random Fore
 
 ---
 
+LIVE LINK - https://earthquakeprediction-by-sourabh.streamlit.app/
+
+
 # 🚀 Problem Statement
 
 Earthquakes are one of the most dangerous natural disasters. Predicting earthquake magnitude can help improve:
