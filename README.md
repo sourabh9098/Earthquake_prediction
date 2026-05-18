@@ -1,6 +1,6 @@
 # 🌍 Nepal Earthquake Magnitude Predictor
 
-![Dashboard](Dashboard.png)
+![Dashboard](Live Screenshot.png)
 
 [![Live Demo](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://earthquakeprediction-by-sourabh.streamlit.app/)
 
@@ -118,7 +118,16 @@ earthquake_prediction/
 
 ---
 
+#  Visualizations Included
 
+- Correlation Heatmap
+- Residual Plot
+- Actual vs Predicted Plot
+- Feature Importance Graph
+- SHAP Summary Plot
+- Distributio
+  
+![Dashboard](Dashboard.png)
 
 ## Tech Stack
 
