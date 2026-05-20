@@ -118,7 +118,7 @@ earthquake_prediction/
 
 ---
 
-#  Visualizations Included
+#  Visualizations Included :-
 
 - Correlation Heatmap
 - Residual Plot
